@@ -59,15 +59,13 @@ static NSString *AutoCompletionCellIdentifier = @"AutoCompletionCell";
         [array addObject:[LoremIpsum wordsWithNumber:words]];
     }
     
-    NSArray *reversed = [[array reverseObjectEnumerator] allObjects];
-    
-    self.messages = [[NSMutableArray alloc] initWithArray:reversed];
+    self.messages = [[NSMutableArray alloc] initWithArray:array];
     
     self.bounces = YES;
     self.shakeToClearEnabled = YES;
     self.keyboardPanningEnabled = YES;
     self.inverted = YES;
-    
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[MessageTableViewCell class] forCellReuseIdentifier:MessengerCellIdentifier];
 
