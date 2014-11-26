@@ -1371,6 +1371,15 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     [self showAutoCompletionView:canShow];
 }
 
+- (void)showAutoCompletionView
+{
+    // Reload the tableview before showing it
+    [self.autoCompletionView reloadData];
+    [self.autoCompletionView setContentOffset:CGPointZero];
+    
+    [self showAutoCompletionView:YES];
+}
+
 - (void)cancelAutoCompletion
 {
     _foundPrefix = nil;

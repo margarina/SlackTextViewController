@@ -352,6 +352,7 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
  */
 - (void)acceptAutoCompletionWithString:(NSString *)string;
 
+- (void)showAutoCompletionView;
 
 ///------------------------------------------------
 /// @name Text Caching
