@@ -97,6 +97,9 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
 @property (nonatomic, readonly) UIButton *leftButton;
 @property (nonatomic, readonly) UIButton *rightButton;
 
+// Top view.
+@property (nonatomic, strong) UIView *topView;
+@property (nonatomic, assign) CGFloat topViewHeight;
 
 ///------------------------------------------------
 /// @name Initialization

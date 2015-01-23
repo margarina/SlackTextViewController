@@ -147,6 +147,8 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     self.shouldClearTextAtRightButtonPress = YES;
     self.shouldForceTextInputbarAdjustment = NO;
     self.shouldScrollToBottomAfterKeyboardShows = NO;
+    
+    self.topViewHeight = 0.0;
 }
 
 
@@ -160,6 +162,11 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     [self.view addSubview:self.autoCompletionView];
     [self.view addSubview:self.typingIndicatorView];
     [self.view addSubview:self.textInputbar];
+    
+    if (self.topView)
+    {
+        [self.view addSubview:self.topView];
+    }
 }
 
 - (void)viewDidLoad
@@ -1703,9 +1710,20 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
                             @"autoCompletionView": self.autoCompletionView,
                             @"typingIndicatorView": self.typingIndicatorView,
                             @"textInputbar": self.textInputbar,
+                            @"topView": self.topView
                             };
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView(0@750)][autoCompletionView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(>=0)]|" options:0 metrics:nil views:views]];
+    if (self.topView)
+    {
+        NSDictionary *metrics = @{ @"topViewHeight": @(self.topViewHeight) };
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topView(==topViewHeight)][scrollView(0@750)][autoCompletionView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(>=0)]|" options:0 metrics:metrics views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topView]|" options:0 metrics:nil views:views]];
+    }
+    else
+    {
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView(0@750)][autoCompletionView(0@750)][typingIndicatorView(0)]-0@999-[textInputbar(>=0)]|" options:0 metrics:nil views:views]];
+    }
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[autoCompletionView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[typingIndicatorView]|" options:0 metrics:nil views:views]];
