@@ -101,6 +101,9 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, assign) CGFloat topViewHeight;
 
+// Container workaround.
+@private (nonatomic, assign) CGFloat containerBottomPadding;
+
 ///------------------------------------------------
 /// @name Initialization
 ///------------------------------------------------

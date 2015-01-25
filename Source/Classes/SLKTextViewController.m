@@ -149,6 +149,7 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     self.shouldScrollToBottomAfterKeyboardShows = NO;
     
     self.topViewHeight = 0.0;
+    self.containerBottomPadding = 0.0;
 }
 
 
@@ -461,6 +462,11 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     
     if (keyboardHeight < 0) {
         keyboardHeight = 0.0;
+    }
+    
+    if (self.containerBottomPadding > 0.0)
+    {
+        return MAX(0.0, keyboardHeight - self.containerBottomPadding);
     }
     
     return keyboardHeight;
@@ -940,6 +946,11 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
 
 - (BOOL)detectExternalKeyboardInNotification:(NSNotification *)notification
 {
+    if (self.containerBottomPadding > 0.0)
+    {
+        return NO; // Disabled for container workaround.
+    }
+    
     CGRect targetRect = CGRectZero;
     
     if ([notification.name isEqualToString:UIKeyboardWillShowNotification]) {
