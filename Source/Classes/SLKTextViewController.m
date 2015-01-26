@@ -946,11 +946,6 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
 
 - (BOOL)detectExternalKeyboardInNotification:(NSNotification *)notification
 {
-    if (self.containerBottomPadding > 0.0)
-    {
-        return NO; // Disabled for container workaround.
-    }
-    
     CGRect targetRect = CGRectZero;
     
     if ([notification.name isEqualToString:UIKeyboardWillShowNotification]) {
@@ -965,7 +960,13 @@ NSString * const SLKKeyboardDidHideNotification =   @"SLKKeyboardDidHideNotifica
     if (!self.isMovingKeyboard) {
         CGFloat maxKeyboardHeight = keyboardFrame.origin.y + keyboardFrame.size.height;
         maxKeyboardHeight -= [self appropriateTabBarHeight];
-
+        
+        // Container workaround.
+        if (self.containerBottomPadding > 0.0)
+        {
+            return (maxKeyboardHeight > (CGRectGetHeight(self.view.bounds) + self.containerBottomPadding));
+        }
+        
         return (maxKeyboardHeight > CGRectGetHeight(self.view.bounds));
     }
     else {
